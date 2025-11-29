@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key's World</title>
+    <link rel="icon" href="assets/k.png">
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "firebase/app": "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js",
+          "firebase/database": "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js",
+          "firebase/storage": "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"
+        }
+      }
+    </script>
+</head>
+
+<body>
+
+    <div class="main-grid">
+        <!-- Column 1: Main Content -->
+        <div class="col-1">
+            <!-- 1. Premium CRT Monitor (Welcome) -->
+            <div class="crt-monitor">
+                <div class="crt-screen">
+                    <div class="crt-content">
+                        <img src="assets/keymaster.jpeg" alt="Keymaster" class="crt-img">
+                        <div>
+                            <h2 style="color: var(--crt-green); margin-bottom: 5px;">KEY'S WORLD</h2>
+                            <p>> USER: KEY</p>
+                            <p>> ROLE: DEV</p>
+                            <p>> Hello Visitor!</p>
+                            <p style="margin-top: 10px;">> <a href="about.html"
+                                    style="color: var(--crt-green); text-decoration: underline;">EXECUTE
+                                    BIO.EXE</a><span class="cursor"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Blog (Floppy Stack) -->
+            <div class="floppy-stack">
+                <div class="floppy-disk">
+                    <div class="floppy-label">
+                        <a href="blog.html"
+                            style="text-decoration: none; color: inherit; font-weight: bold; width: 100%;">DATA: BLOG
+                            (CLICK TO VIEW)</a>
+                        <span>[+]</span>
+                    </div>
+                    <!-- Gray shutter box removed as requested -->
+                    <div class="floppy-content">
+                        <p>Loading latest posts...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Projects (Cartridges) -->
+            <div class="box">
+                <div class="box-title"><a href="projects.html">★ PROJECTS (VIEW ALL)</a></div>
+
+                <div class="cartridge-box">
+                    <div class="cartridge-label">
+                        <img src="assets/icon-128.png" class="cartridge-art">
+                        <div>
+                            <h4><a href="https://github.com/AmazingKeymaster/Memento-Mori" target="_blank"
+                                    style="color: #000;">MEMENTO - MORI</a></h4>
+                            <p style="font-size: 10px; color: #333;">Productivity Extension</p>
+                        </div>
+                    </div>
+                    <div class="cartridge-grooves"></div>
+                </div>
+
+                <div class="cartridge-box">
+                    <div class="cartridge-label">
+                        <img src="assets/aether.png" class="cartridge-art">
+                        <div>
+                            <h4><a href="https://github.com/AmazingKeymaster/Aether-IPC" target="_blank"
+                                    style="color: #000;">AETHER-IPC</a></h4>
+                            <p style="font-size: 10px; color: #333;">Zero-Copy IPC Lib</p>
+                        </div>
+                    </div>
+                    <div class="cartridge-grooves"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 2: Secondary Content -->
+        <div class="col-2">
+            <!-- 4. Mood Tracker -->
+            <div class="mood-tracker">
+                <div style="font-size: 10px; color: #b0bec5; margin-bottom: 5px;">MOOD TRACKER</div>
+                <div class="mood-icon">☕</div>
+                <div style="font-size: 12px; color: #fff;">CAFFEINATED</div>
+            </div>
+
+            <!-- 5. Catpad Notes -->
+            <div class="catpad">
+                <div class="css-cat">
+                    <div class="css-cat-eye left"></div>
+                    <div class="css-cat-eye right"></div>
+                </div>
+                <div style="text-align: center; margin-top: 5px; font-size: 10px;">
+                    <strong>CATPAD NOTES</strong><br>
+                    <span style="color: #555;">- Buy more tuna</span><br>
+                    <span style="color: #555;">- Fix bugs</span>
+                </div>
+            </div>
+
+            <!-- 6. Mini Guestbook -->
+            <div class="mini-board">
+                <div style="text-align: center; margin-bottom: 10px; font-weight: bold; color: #3e2723;">
+                    <a href="guestbook.html"
+                        style="color: #3e2723; text-decoration: none; border-bottom: 1px dashed #3e2723;">LATEST
+                        SIGNATURES</a>
+                </div>
+                <ul id="mini-guestbook-list" style="list-style: none; padding: 0;">
+                    <li style="text-align: center; font-size: 10px;">Loading...</li>
+                </ul>
+                <a href="guestbook.html"
+                    style="display: block; text-align: center; background: #fff; color: #000; padding: 5px; border: 1px solid #000; margin-top: 10px;">SIGN
+                    GUESTBOOK</a>
+            </div>
+        </div>
+
+        <!-- Column 3: Sticky Sidebar -->
+        <div class="col-3">
+            <!-- Links Box -->
+            <div class="box">
+                <div class="box-title">★ LINKS</div>
+                <ul class="links-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About me</a></li>
+                    <li><a href="diary.html">Diary</a></li>
+                    <li><a href="photo-album.html">Photo Album <span class="notify-icon">(!)</span></a></li>
+                    <li><a href="guestbook.html">Guestbook</a></li>
+                    <li><a href="https://github.com/AmazingKeymaster" target="_blank">GitHub</a></li>
+                    <li><a href="https://ko-fi.com/amazingkeymaster" target="_blank">Donate ♡</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

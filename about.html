@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Key's World</title>
+    <link rel="icon" href="assets/k.png">
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "firebase/app": "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js",
+          "firebase/database": "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js",
+          "firebase/storage": "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"
+        }
+      }
+    </script>
+</head>
+
+<body>
+
+    <div class="inner-container about-center">
+        <div class="box" style="width: 100%; max-width: 800px;">
+            <div class="box-title">★ PLAYER PROFILE</div>
+
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+                <!-- Portrait -->
+                <div style="text-align: center;">
+                    <img src="assets/keymaster.jpeg" alt="Keymaster"
+                        style="width: 100%; border: 4px solid #fff; image-rendering: pixelated;">
+                    <div style="margin-top: 10px; color: var(--accent-color);">LVL. 18</div>
+                </div>
+
+                <!-- Stats -->
+                <div>
+                    <h3 style="border-bottom: 2px solid #fff; padding-bottom: 5px; margin-bottom: 15px;">STATS</h3>
+
+                    <div
+                        style="display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px dashed #333; padding-bottom: 5px;">
+                        <span>CLASS</span>
+                        <span style="color: var(--secondary-accent);">SILLY DEV</span>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; margin-bottom: 5px; border-bottom: 1px dashed #333; padding-bottom: 5px;">
+                        <span>SKILLS</span>
+                        <span style="color: var(--secondary-accent);">UI/UX, JAVA, PYTHON</span>
+                    </div>
+
+                    <h3 style="border-bottom: 2px solid #fff; padding-bottom: 5px; margin: 20px 0 15px 0;">BIO</h3>
+                    <p>Hiiiii! I am key. Nice to meet You!</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="index.html">&lt; BACK TO HOME</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

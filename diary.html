@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary - Key's World</title>
+    <link rel="icon" href="assets/k.png">
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "firebase/app": "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js",
+          "firebase/database": "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js",
+          "firebase/storage": "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"
+        }
+      }
+    </script>
+</head>
+
+<body>
+
+    <div class="inner-container">
+        <a href="index.html" style="display: block; margin-bottom: 20px;">&lt; BACK TO HOME</a>
+
+        <div class="book-container">
+            <div class="book">
+                <!-- Page 0: Cover Leaf -->
+                <div class="page" id="page-0">
+                    <div class="page-front cover-front">
+                        <h1
+                            style="font-size: 3rem; color: #ffd700; border: 4px double #ffd700; padding: 20px; background: rgba(0,0,0,0.3);">
+                            MY DIARY</h1>
+                        <button class="next-btn"
+                            style="position: absolute; bottom: 20px; right: 20px; cursor: pointer; font-family: var(--font-main);">OPEN
+                            &gt;</button>
+                    </div>
+                    <div class="page-back cover-back journal-lines">
+                        <!-- Left Inner Page Content (Dynamic) -->
+                        <div id="diary-content" style="padding: 20px;">
+                            <p style="font-family: var(--font-hand); font-size: 1.5rem; color: #000;">Loading entry...
+                            </p>
+                        </div>
+                        <button class="prev-btn"
+                            style="position: absolute; bottom: 20px; left: 20px; cursor: pointer; font-family: var(--font-main);">&lt;
+                            CLOSE</button>
+                    </div>
+                </div>
+
+                <!-- Page 1: Content Leaf -->
+                <div class="page" id="page-1" style="z-index: 0;">
+                    <div class="page-front content-front journal-lines">
+                        <div style="padding: 20px; opacity: 0.5; text-align: center; margin-top: 50%;">
+                            (Next Entry...)
+                        </div>
+                    </div>
+                    <div class="page-back"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

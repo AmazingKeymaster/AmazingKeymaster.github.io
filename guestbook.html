@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guestbook - Key's World</title>
+    <link rel="icon" href="assets/k.png">
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "firebase/app": "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js",
+          "firebase/database": "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js",
+          "firebase/storage": "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"
+        }
+      }
+    </script>
+</head>
+
+<body>
+
+    <div class="inner-container">
+        <a href="index.html" style="display: block; margin-bottom: 20px;">&lt; BACK TO HOME</a>
+
+        <div class="box"
+            style="min-height: 600px; background-color: #5d4037; background-image: linear-gradient(45deg, #4e342e 25%, transparent 25%, transparent 75%, #4e342e 75%, #4e342e), linear-gradient(45deg, #4e342e 25%, transparent 25%, transparent 75%, #4e342e 75%, #4e342e); background-size: 20px 20px; background-position: 0 0, 10px 10px; border: 8px solid #3e2723; position: relative;">
+            <div class="box-title" style="background: #3e2723; color: #fff;">✎ GUESTBOOK (LIVE)</div>
+
+            <!-- Form Note -->
+            <form id="guestbook-form" class="box guestbook-form"
+                style="background: #fff9c4; color: #000; width: 250px; position: absolute; top: 50px; left: 50px; transform: rotate(-2deg); z-index: 10;">
+                <div
+                    style="width: 10px; height: 10px; background: #f44336; border-radius: 50%; position: absolute; top: -5px; left: 50%; transform: translateX(-50%); box-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                </div>
+                <h4 style="color: #000; margin-bottom: 10px; text-align: center;">SIGN HERE!</h4>
+                <input type="text" name="name" placeholder="Name" required>
+                <textarea name="message" placeholder="Message" style="height: 80px;" required></textarea>
+                <button type="submit"
+                    style="width: 100%; background: #000; color: #fff; border: none; padding: 8px; cursor: pointer; font-family: var(--font-main); font-size: 10px;">POST</button>
+            </form>
+
+            <!-- Entries Container (Populated by Firebase) -->
+            <div id="guestbook-entries"
+                style="position: absolute; top: 50px; left: 350px; width: 500px; display: flex; flex-wrap: wrap; gap: 20px;">
+                <div style="color: #fff; background: rgba(0,0,0,0.5); padding: 10px;">Loading entries from cloud...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>
