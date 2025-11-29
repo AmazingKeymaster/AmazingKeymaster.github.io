@@ -197,7 +197,6 @@ function initBlog() {
                             <span>DATA: ${post.title}</span>
                             <span>[+]</span>
                         </div>
-                        <div class="floppy-shutter"></div>
                         <div class="floppy-content">
                             <p>${post.content}</p>
                         </div>
