@@ -223,6 +223,18 @@ function initSpotifyWidget() {
     const titleEl = widget.querySelector('.track-info .track-title');
     const artistEl = widget.querySelector('.track-info .track-artist');
     const indicator = widget.querySelector('.playing-indicator .equalizer');
+    const statusEl = widget.querySelector('.spotify-status');
+    const modeEl = widget.querySelector('.spotify-mode');
+    const lenEl = widget.querySelector('.spotify-len');
+    const updatedEl = widget.querySelector('.spotify-updated');
+
+    function formatDuration(ms) {
+        if (typeof ms !== 'number') return '--:--';
+        const totalSeconds = Math.floor(ms / 1000);
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
 
     function updateUI(track, isPlaying) {
         if (track && track.album && track.album.images && track.album.images[0]) {
@@ -236,7 +248,32 @@ function initSpotifyWidget() {
             ? track.artists.map(a => a.name).join(', ')
             : '';
 
-        indicator.style.display = isPlaying ? 'inline-block' : 'none';
+        if (lenEl) {
+            lenEl.textContent = ' ' + (track ? formatDuration(track.duration_ms) : '--:--');
+        }
+
+        if (!statusEl || !indicator || !modeEl) return;
+
+        if (track) {
+            if (isPlaying) {
+                statusEl.textContent = '▶ NOW PLAYING';
+                statusEl.classList.add('spotify-status-playing');
+                statusEl.classList.remove('spotify-status-paused');
+                modeEl.textContent = ' LIVE';
+                indicator.style.display = 'inline-block';
+            } else {
+                statusEl.textContent = '■ LAST PLAYED';
+                statusEl.classList.add('spotify-status-paused');
+                statusEl.classList.remove('spotify-status-playing');
+                modeEl.textContent = ' HISTORY';
+                indicator.style.display = 'none';
+            }
+        } else {
+            statusEl.textContent = 'NO DATA';
+            statusEl.classList.remove('spotify-status-playing', 'spotify-status-paused');
+            modeEl.textContent = ' OFF';
+            indicator.style.display = 'none';
+        }
     }
 
     async function refreshAndUpdate() {
@@ -248,25 +285,29 @@ function initSpotifyWidget() {
             if (!resp.ok) {
                 console.error('Spotify API error', resp.status);
                 updateUI(null, false);
-                return;
-            }
-
-            const data = await resp.json();
-
-            if (data && data.track) {
-                updateUI(data.track, data.isPlaying);
             } else {
-                updateUI(null, false);
+                const data = await resp.json();
+                if (data && data.track) {
+                    updateUI(data.track, data.isPlaying);
+                } else {
+                    updateUI(null, false);
+                }
             }
         } catch (e) {
             console.error('Spotify widget error', e);
             updateUI(null, false);
+        }
+
+        if (updatedEl) {
+            const now = new Date();
+            updatedEl.textContent = ' ' + now.toLocaleTimeString();
         }
     }
 
     refreshAndUpdate();
     setInterval(refreshAndUpdate, 30000);
 }
+
 
 
 const clickSound = new Audio('assets/click.mp3');
