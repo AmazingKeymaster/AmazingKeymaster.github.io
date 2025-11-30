@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         checkNavState();
         initBookLogic();
         initAudio();
+        initSpotifyWidget();
 
         // Dynamic Inits
         initGuestbook();
@@ -213,6 +214,118 @@ function initBlog() {
     } catch (e) { console.error("Blog Init Error:", e); }
 }
 // --- EXISTING LOGIC ---
+
+function initSpotifyWidget() {
+    const widget = document.querySelector('.spotify-widget');
+    if (!widget) return;
+    const coverImg = widget.querySelector('.cover-art img');
+    const titleEl = widget.querySelector('.track-info .track-title');
+    const artistEl = widget.querySelector('.track-info .track-artist');
+    const indicator = widget.querySelector('.playing-indicator .equalizer');
+
+    // Helper to update UI
+    function updateUI(track, isPlaying) {
+        if (track && track.album && track.album.images && track.album.images[0]) {
+            coverImg.src = track.album.images[0].url;
+        } else {
+            coverImg.src = '';
+        }
+        titleEl.textContent = track ? track.name : 'No track';
+        artistEl.textContent = track && track.artists ? track.artists.map(a => a.name).join(', ') : '';
+        if (isPlaying) {
+            indicator.style.display = 'inline-block';
+        } else {
+            indicator.style.display = 'none';
+        }
+    }
+
+    // Parse tokens
+    const tokenStr = (typeof secrets !== 'undefined' && secrets.SPOTIFY_TOKENS) || '';
+    const [clientId, clientSecret, refreshToken] = tokenStr.split(',');
+    if (!clientId || !clientSecret || !refreshToken) {
+        updateUI(null, false);
+        console.warn('Spotify tokens not configured');
+        return;
+    }
+
+    // Get access token
+    async function fetchAccessToken() {
+        const params = new URLSearchParams();
+        params.append('grant_type', 'refresh_token');
+        params.append('refresh_token', refreshToken);
+        const authHeader = btoa(`${clientId}:${clientSecret}`);
+        try {
+            const resp = await fetch('https://accounts.spotify.com/api/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': `Basic ${authHeader}`
+                },
+                body: params
+            });
+            if (!resp.ok) throw new Error('Token request failed');
+            const data = await resp.json();
+            return data.access_token;
+        } catch (e) {
+            console.error('Spotify token error', e);
+            return null;
+        }
+    }
+
+    async function fetchNowPlaying(accessToken) {
+        try {
+            const resp = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+                headers: { 'Authorization': `Bearer ${accessToken}` }
+            });
+            if (resp.status === 204) return null; // No content
+            if (!resp.ok) throw new Error('Now playing request failed');
+            const data = await resp.json();
+            return data;
+        } catch (e) {
+            console.error('Now playing error', e);
+            return null;
+        }
+    }
+
+    async function fetchRecentlyPlayed(accessToken) {
+        try {
+            const resp = await fetch('https://api.spotify.com/v1/me/player/recently-played?limit=1', {
+                headers: { 'Authorization': `Bearer ${accessToken}` }
+            });
+            if (!resp.ok) throw new Error('Recently played request failed');
+            const data = await resp.json();
+            return data.items && data.items[0] ? data.items[0] : null;
+        } catch (e) {
+            console.error('Recently played error', e);
+            return null;
+        }
+    }
+
+    async function refreshAndUpdate() {
+        const token = await fetchAccessToken();
+        if (!token) {
+            updateUI(null, false);
+            return;
+        }
+        let now = await fetchNowPlaying(token);
+        if (now && now.item) {
+            updateUI(now.item, now.is_playing);
+        } else {
+            const recent = await fetchRecentlyPlayed(token);
+            if (recent && recent.track) {
+                updateUI(recent.track, false);
+            } else {
+                updateUI(null, false);
+            }
+        }
+    }
+
+    // Initial load
+    refreshAndUpdate();
+    // Refresh every 30 seconds
+    setInterval(refreshAndUpdate, 30000);
+}
+
 const clickSound = new Audio('assets/click.mp3');
 const flipSound = new Audio('assets/pageflip.mp3');
 function initAudio() {
